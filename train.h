@@ -7,10 +7,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
+#include <math.h>
+#include <string.h>
 
 #ifndef TRAIN_H
 #define	TRAIN_H
+
+/**********************************************
+* Définition des destinations         		  *
+**********************************************/
+
+char* tab_Dest[]={
+	"Chez P.Descamps",
+	"Paris",
+	"Marseille",
+	"Le Crew",
+	"Dijon",
+	"Palaiseau",
+	"Lyon",
+	"Bordeaux",
+	"Strasbourg",
+	"Toulouse"
+};
+
 
 /**********************************************
 * Définition du type Train         			  *
