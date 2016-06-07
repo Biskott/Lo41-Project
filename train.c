@@ -5,7 +5,11 @@
 * Auteurs : 								  *
 * Elise Kocik et NGOUANA NGOUMKOUA Wilfried	  *
 **********************************************/
-
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "train.h"
 
 
@@ -19,7 +23,6 @@ Train* createTrain(int id, Type type, Direction dir)
 	t->id=id;
 	t->type=type;
 	t->direction=dir;
-	srand(time(NULL));
 	t->destination=tab_Dest[(rand()%10)];
 	char* typ;
 	switch(t->type){
@@ -45,10 +48,11 @@ Train* randomTrain(int id)
 {
 	Type type;
 	Direction dir;
-	srand(time(NULL));
-    if((rand()%2)==0){dir=EO;}
+	int j=rand()%2;
+    if(j==0){dir=EO;}
     else{dir=OE;}
-    switch (rand()%3){
+    int k=rand()%3;
+    switch (k){
     	case 0:
     			type=TGV;
     			break;
