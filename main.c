@@ -13,5 +13,6 @@ int main()
     int i;
     for(i=0; i<8; i++){
     	T[i]=randomTrain(i);
+    	deleteTrain(T[i]);
     }
 }

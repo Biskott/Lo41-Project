@@ -57,6 +57,7 @@ typedef struct {
 /**********************************************
 * Fonctions sur les Trains         			  *
 **********************************************/
+
 /** Crée un nouveau train avec l'id et le type spécifié
 * La destination est aléatoire*/
 Train* createTrain(int id, Type type, Direction dir);

@@ -40,30 +40,64 @@ Train* createTrain(int id, Type type, Direction dir)
 				break;
 
 	}
-	printf("Le %s %i a pour destination %s \n",typ,t->id,t->destination);
+	char* direc;
+	switch(t->direction){
+		case EO:
+				direc="EO";
+				break;
+		default:
+				direc="OE";
+				break;
+
+	}
+	printf("Le %s %i  %s a pour destination %s \n",typ,t->id,direc,t->destination);
 	return t;
 }
 
+/**********************************************
+* Création d'un train aléatoire               *
+**********************************************/
 Train* randomTrain(int id)
 {
 	Type type;
 	Direction dir;
-	int j=rand()%2;
-    if(j==0){dir=EO;}
-    else{dir=OE;}
-    int k=rand()%3;
+    int k=rand()%6;
     switch (k){
     	case 0:
     			type=TGV;
+    			dir=OE;
     			break;
     	case 1:
     			type=GL;
+    			dir=OE;
     			break;
     	case 2:
     			type=M;
+    			dir=OE;
+    			break;
+    	case 3:
+    			type=TGV;
+    			dir=EO;
+    			break;
+    	case 4:
+    			type=GL;
+    			dir=EO;
+    			break;
+    	case 5:
+    			type=M;
+    			dir=EO;
     			break;
     }
 
 	Train * t =createTrain(id, type, dir);
 	return t;
 }
+
+/**********************************************
+* Suppression d'un train                      *
+**********************************************/
+void deleteTrain(Train *t){
+	free(t);
+}
+
+
