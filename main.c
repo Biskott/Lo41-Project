@@ -9,6 +9,10 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <pthread.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "train.c"
 
 sem_t * voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL, *tunnel, *voieL;
@@ -98,7 +102,8 @@ void M_OE ()
 
 void * fonc_Train(void *num)
 {
-	printf("Thread\n");
+	printf("num thread %i \n",(int)num);
+    printf("de TID : %ld \n", (long) pthread_self());
 	Train * t=randomTrain((int)num);
 	switch(t->type){
 		case TGV:
@@ -118,26 +123,29 @@ void * fonc_Train(void *num)
 					break;
 	}
 	deleteTrain(t);
-	exit(0);
+	pthread_exit(NULL);
 }
 
 int main()
 {
 	//greve();
 	srand(time(NULL));
-	int NumTrain;
+	int NumTrain =0;
 	int NbTrains= 12;
 	pthread_t tid[NbTrains];
 	createVoie();
-	printf("Avant for");
 	//getchar();
-	for(NumTrain=0;NumTrain<NbTrains;NumTrain ++){
-		printf("%i num thread \n",NumTrain);
+	int rc,j;
+	for(j=0;j<NbTrains;j ++){
+		
 		//getchar();
-        if(pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)){
-        	printf("Erreur dans la creation du thread %i",NumTrain);
-			perror("pthread_create");
+        if(rc=pthread_create(&(tid[j]), NULL, fonc_Train, (void*)j)!=0){
+        	printf("Erreur dans la creation du thread %i",j);
 			return EXIT_FAILURE;
+    	}
+    	else{
+    		
+    		NumTrain++;
     	}
     }
 
@@ -148,7 +156,8 @@ int main()
 
 
 
-   	printf("FINI\n");
+   	printf("FIN\n");
    	deleteVoie();
+   	pthread_exit(NULL);
    	return(0);
 }
