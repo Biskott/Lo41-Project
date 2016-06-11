@@ -21,7 +21,7 @@
 char* tab_Dest[]={
 	"Chez P.Descamps",
 	"Paris",
-	"Marseille",
+	"Mamen",
 	"Le Crew",
 	"Dijon",
 	"Palaiseau",
