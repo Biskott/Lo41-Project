@@ -51,18 +51,18 @@ void createVoie()
 }
 
 void deleteVoie(){
-	sem_destroy(voieA);
-   	sem_destroy(voieB);
-   	sem_destroy(voieC);
-   	sem_destroy(voieD);
-   	sem_destroy(aig1);
-   	sem_destroy(aig2);
-   	sem_destroy(gTGV);
-   	sem_destroy(gM2);
-   	sem_destroy(gM1);
-   	sem_destroy(gGL);
-   	sem_destroy(tunnel);
-   	sem_destroy(voieL);
+	sem_unlink("/voieA");
+   	sem_unlink("/voieB");
+   	sem_unlink("/voieC");
+   	sem_unlink("/voieD");
+   	sem_unlink("/aig1");
+   	sem_unlink("/aig2");
+   	sem_unlink("/gTGV");
+   	sem_unlink("/gM2");
+   	sem_unlink("/gM1");
+   	sem_unlink("/gGL");
+   	sem_unlink("/tunnel");
+   	sem_unlink("/voieL");
 }
 
 void TGV_EO ()
@@ -130,37 +130,42 @@ void * fonc_Train(void *num)
 
 int main(int argc, char* argv[])
 {
+	//La SNCF est en greve
 	//greve();
 	srand(time(NULL));
+	// nombre de trains déf en paramètre ou via la constante
 	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
-	/* nombre de trains déf en paramètre ou via la constante */
+	
 	printf("nbtrains : %i \n",NbTrains);
 	int NumTrain =0;
 	pthread_t tid[NbTrains];
 	createVoie();
 	//getchar();
-	int rc,j;
-	for(j=0;j<NbTrains;j ++){
-		
-		//getchar();
-        if(rc=pthread_create(&(tid[j]), NULL, fonc_Train, (void*)j)!=0){
-        	printf("Erreur dans la creation du thread %i",j);
-			return EXIT_FAILURE;
-    	}
-    	else{
-    		
-    		NumTrain++;
-    	}
+	int rc,k;
+	//Génération des trains à des intervalles de temps aléatoires
+	while(NumTrain<NbTrains){
+		k=rand()%7;
+		//Création des threads trains
+		if(k<2){
+	        if(rc=pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)!=0){
+	        	printf("Erreur dans la creation du thread %i",NumTrain);
+				return EXIT_FAILURE;
+	    	}
+	    	else{
+	    		NumTrain++;
+	    	}
+	    }
+	    usleep(1000000);
     }
+
+
+
 
     int i;
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
-
-
-
-   	printf("FIN\n");
+   	printf("\n\nC'est l'heure de fermer la gare, à plus tard!\n\n");
    	deleteVoie();
    	pthread_exit(NULL);
    	return(0);
