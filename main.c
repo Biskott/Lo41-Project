@@ -15,6 +15,8 @@
 
 #include "train.c"
 
+#define NB_TRAINS 12
+
 sem_t * voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL, *tunnel, *voieL;
 
 
@@ -126,12 +128,14 @@ void * fonc_Train(void *num)
 	pthread_exit(NULL);
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 	//greve();
 	srand(time(NULL));
+	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
+	/* nombre de trains déf en paramètre ou via la constante */
+	printf("nbtrains : %i \n",NbTrains);
 	int NumTrain =0;
-	int NbTrains= 12;
 	pthread_t tid[NbTrains];
 	createVoie();
 	//getchar();
