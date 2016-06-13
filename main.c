@@ -13,13 +13,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+int stop=0;
+Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
+
 #include "train.c"
 #include "voie.c"
+#include "aiguilleur.c"
 
 #define NB_TRAINS 12
 
-int stop=0;
-Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
+
 
 void greve()
 {
