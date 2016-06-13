@@ -14,54 +14,53 @@
 #include <sys/stat.h>
 
 #include "train.c"
+#include "voie.c"
 
 #define NB_TRAINS 12
 
-sem_t * voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL, *tunnel, *voieL;
-
-
+Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
 
 void greve()
 {
-	sleep(5);
+	sleep(4);
 	printf("\nSuite à une grève du personnel, aucun train ne circulera aujourd'hui.\n");
 	printf("\nVeuillez nous excuser pour la gène occasionnée.\n\n");
-	sleep (5);
+	sleep (7);
 	printf("\nLa SNCF ne contrôle pas ce programme : reprise normale du trafic.\n\n");
 	sleep(4);
 	system("clear");
 	printf("\n");
 }
 
-
-void createVoie()
+void initReseau()
 {
-	voieA=sem_open("/voieA", O_RDWR | O_CREAT, 0666, 1);
-	voieB=sem_open("/voieB", O_RDWR | O_CREAT, 0666, 1);
-   	voieC =sem_open("/voieC", O_RDWR | O_CREAT, 0666, 2);
-   	voieD=sem_open("/voieD", O_RDWR | O_CREAT, 0666, 2);
-	aig1=sem_open("/aig1", O_RDWR | O_CREAT, 0666, 1);
-   	aig2 =sem_open("/aig2", O_RDWR | O_CREAT, 0666, 1);
-   	gTGV=sem_open("/gTGV", O_RDWR | O_CREAT, 0666, 1);
-	gM1=sem_open("/gM1", O_RDWR | O_CREAT, 0666, 1);
-   	gM2 =sem_open("/gM2", O_RDWR | O_CREAT, 0666, 1);
-   	gGL=sem_open("/gGL", O_RDWR | O_CREAT, 0666, 1);
-	tunnel=sem_open("/tunnel", O_RDWR | O_CREAT, 0666, 1);
+	//printf("voieA");
+	//fflush(stdout);
+	voieA =createVoie("voieA");
+	voieB=createVoie("voieB");
+	voieC=createVoie("voieC");
+	voieD=createVoie("voieD");
+	aig1=createVoie("aig1");
+	aig2=createVoie("aig2");
+	gTGV=createVoie("gTGV");
+	gM1=createVoie("gM1");
+	gM2=createVoie("gM2");
+	gGL=createVoie("gGL");
+	tunnel=createVoie("tunnel");
 }
-
-void deleteVoie(){
-	sem_unlink("/voieA");
-   	sem_unlink("/voieB");
-   	sem_unlink("/voieC");
-   	sem_unlink("/voieD");
-   	sem_unlink("/aig1");
-   	sem_unlink("/aig2");
-   	sem_unlink("/gTGV");
-   	sem_unlink("/gM2");
-   	sem_unlink("/gM1");
-   	sem_unlink("/gGL");
-   	sem_unlink("/tunnel");
-   	sem_unlink("/voieL");
+void deleteReseau()
+{
+	deleteVoie(voieA);
+	deleteVoie(voieB);
+	deleteVoie(voieC);
+	deleteVoie(voieD);
+	deleteVoie(aig1);
+	deleteVoie(aig2);
+	deleteVoie(gTGV);
+	deleteVoie(gM1);
+	deleteVoie(gM2);
+	deleteVoie(gGL);
+	deleteVoie(tunnel);
 }
 
 void TGV_EO ()
@@ -97,8 +96,8 @@ void M_OE ()
 
 void * fonc_Train(void *num)
 {
-	printf("num thread %i \n",(int)num);
-    printf("de TID : %ld \n", (long) pthread_self());
+	//printf("num thread %i \n",(int)num);
+    //printf("de TID : %ld \n", (long) pthread_self());
 	Train * t=randomTrain((int)num);
 	switch(t->type){
 		case TGV:
@@ -124,17 +123,38 @@ void * fonc_Train(void *num)
 int main(int argc, char* argv[])
 {
 	//La SNCF est en greve
-	greve();
+	//greve();
+	initReseau();
 	srand(time(NULL));
 	// nombre de trains déf en paramètre ou via la constante
 	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
 	
-	printf("nbtrains : %i \n",NbTrains);
+	
+	//printf("nbtrains : %i \n",NbTrains);
 	int NumTrain =0;
 	pthread_t tid[NbTrains];
-	createVoie();
 	//getchar();
 	int rc,k;
+	//Génération de 2 premiers trains
+	if(NbTrains>=2){
+		if(rc=pthread_create(&(tid[0]), NULL, fonc_Train, (void*)NumTrain)!=0){
+	        	printf("Erreur dans la creation du thread %i",NumTrain);
+				return EXIT_FAILURE;
+	    }
+	    else{
+	    		NumTrain++;
+	    }
+	    if(rc=pthread_create(&(tid[1]), NULL, fonc_Train, (void*)NumTrain)!=0){
+	        	printf("Erreur dans la creation du thread %i",NumTrain);
+				return EXIT_FAILURE;
+	    }
+	    else{
+	    		NumTrain++;
+	    }
+	}
+
+
+
 	//Génération des trains à des intervalles de temps aléatoires
 	while(NumTrain<NbTrains){
 		k=rand()%7;
@@ -158,8 +178,8 @@ int main(int argc, char* argv[])
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
+   	deleteReseau();
    	printf("\n\nFermeture de la gare pour cause d'état d'urgence!\n\n");
-   	deleteVoie();
    	pthread_exit(NULL);
    	return(0);
 }

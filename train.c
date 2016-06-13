@@ -1,9 +1,9 @@
 /**********************************************
 * Fonctions relatives au type de donnée :     *
-* BaseNIntegerList                            *
-* Projet LO44 - Automne 2015				  *
+* Train                        				  *
+* Projet LO41 - Printemps 2016				  *
 * Auteurs : 								  *
-* Elise Kocik et NGOUANA NGOUMKOUA Wilfried	  *
+* Elise Kocik et Florian Bishop				  *
 **********************************************/
 #include <time.h>
 #include <math.h>

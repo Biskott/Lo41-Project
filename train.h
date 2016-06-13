@@ -20,12 +20,12 @@
 
 char* tab_Dest[]={
 	"Chez P.Descamps",
-	"Paris",
+	"Hurlevent",
 	"Mamene",
 	"Le Crew",
-	"Dijon",
+	"Dalaran",
 	"Palaiseau",
-	"Lyon",
+	"Fond de l'étang",
 	"Bordeaux",
 	"Strasbourg",
 	"Cul-de-Sac"
@@ -68,4 +68,4 @@ Train* randomTrain(int id);
 /** Suppression du train*/
 void deleteTrain(Train *t);
 
-#endif	/* STRUCTURES_H */
+#endif	/* TRAIN_H */
