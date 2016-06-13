@@ -29,7 +29,9 @@ void * fonc_P0(void *num)
 				sem_post(voieD->semGL);
 			}
 		}
+		sleep(1);
 	}
+	printf("STOP \n");
 	pthread_exit(NULL);
 }
 
@@ -59,8 +61,8 @@ void * fonc_P2(void *num)
 			else if(tunnel->GL>0){
 				sem_post(tunnel->semGL);
 			}
-			else if(tunnel->GL>0){
-				sem_post(tunnel->semGL);
+			else if(tunnel->M>0){
+				sem_post(tunnel->semM);
 			}
 		}
 	}

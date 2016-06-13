@@ -15,7 +15,7 @@
 
 #include "train.c"
 #include "voie.c"
-int stop=0;
+int stop;
 Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
 #include "aiguilleur.c"
 
@@ -76,6 +76,7 @@ void TGV_OE (Train *t)
 {
 	printf("Le TGV %i à destination de %s a été signalé venant de l'Ouest.\n", t->id,t->destination);
 	voieC->TGV++;
+	printf("Voie C %i TGV en attente\n",voieC->TGV );
 	sem_wait(voieC->semTGV);
 	voieC->TGV--;
 	voieC->occupee++;
@@ -241,8 +242,9 @@ int main(int argc, char* argv[])
 	
 	
 	//printf("nbtrains : %i \n",NbTrains);
-	int NumTrain =0;
+	int NumTrain =0, stop=0;
 	pthread_t tid[NbTrains];
+	pthread_t aiguil[3];
 	//getchar();
 	int rc,k;
 	//Génération de 2 premiers trains
@@ -262,8 +264,21 @@ int main(int argc, char* argv[])
 	    		NumTrain++;
 	    }
 	}
+	//Generation des aiguilleurs
 
-
+	if(rc=pthread_create(&(aiguil[0]), NULL, fonc_P0, (void*)0)!=0){
+	    printf("Erreur dans la creation du thread %i",NumTrain);
+		return EXIT_FAILURE;
+	}
+	if(rc=pthread_create(&(aiguil[1]), NULL, fonc_P1, (void*)1)!=0){
+	    printf("Erreur dans la creation du thread %i",NumTrain);
+		return EXIT_FAILURE;
+	}
+	if(rc=pthread_create(&(aiguil[2]), NULL, fonc_P2, (void*)2)!=0){
+	    printf("Erreur dans la creation du thread %i",NumTrain);
+		return EXIT_FAILURE;
+	}
+	
 
 	//Génération des trains à des intervalles de temps aléatoires
 	while(NumTrain<NbTrains){
@@ -283,12 +298,20 @@ int main(int argc, char* argv[])
 
 
 
-    stop=1;
+    
     int i;
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
+   	stop=1;
+   	printf("Join trains OK\n");
+   	int j;
+   	for(j=0;j<3;k ++){
+   		pthread_join(aiguil[j],NULL);
+   	}
+   	printf("Join aiguil OK\n");
    	deleteReseau();
+   	printf("Delete reseau OK\n");
    	printf("\n\nFermeture de la gare pour cause d'état d'urgence!\n\n");
    	pthread_exit(NULL);
    	return(0);
