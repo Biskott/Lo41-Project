@@ -47,7 +47,6 @@ void createVoie()
    	gM2 =sem_open("/gM2", O_RDWR | O_CREAT, 0666, 1);
    	gGL=sem_open("/gGL", O_RDWR | O_CREAT, 0666, 1);
 	tunnel=sem_open("/tunnel", O_RDWR | O_CREAT, 0666, 1);
-   	voieL =sem_open("/voieL", O_RDWR | O_CREAT, 0666, 1);
 }
 
 void deleteVoie(){
@@ -68,38 +67,32 @@ void deleteVoie(){
 void TGV_EO ()
 {
 	printf("TGV_EO\n");
-	pthread_setschedprio(pthread_self(), 20);
 }
 
 void TGV_OE ()
 {
 	printf("TGV_OE\n");
-	pthread_setschedprio(pthread_self(), 20);
 }
 
 void GL_EO ()
 {
 	printf("GL_EO\n");
 
-	pthread_setschedprio(pthread_self(), 5);
 }
 
 void GL_OE ()
 {
 	printf("GL_OE\n");
-	pthread_setschedprio(pthread_self(), 5);
 }
 
 void M_EO ()
 {
 	printf("M_EO\n");
-	pthread_setschedprio(pthread_self(), 1);
 }	
 
 void M_OE ()
 {
 	printf("M_OE\n");
-	pthread_setschedprio(pthread_self(), 1);
 }
 
 void * fonc_Train(void *num)
@@ -165,7 +158,7 @@ int main(int argc, char* argv[])
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
-   	printf("\n\nC'est l'heure de fermer la gare, à plus tard!\n\n");
+   	printf("\n\nFermeture de la gare pour cause d'état d'urgence!\n\n");
    	deleteVoie();
    	pthread_exit(NULL);
    	return(0);
