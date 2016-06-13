@@ -11,9 +11,9 @@
 #include <math.h>
 #include <string.h>
 
-#define TRUE 1
+/**#define TRUE 1
 #define FALSE 0
-typedef int BOOL;
+typedef int BOOL;*/
 
 #ifndef VOIE_H
 #define	VOIE_H
@@ -26,8 +26,8 @@ typedef struct {
 	sem_t * semM;
 	sem_t * semGL;
 	sem_t * semTGV;
-	BOOL reservee;
-    BOOL occupee;
+	int reservee;
+    int occupee;
     char * nom;
     int TGV; //TGV en attente
     int GL; //GL en attente

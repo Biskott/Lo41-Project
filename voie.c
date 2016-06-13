@@ -49,9 +49,13 @@ Voie* createVoie(char* nom)
 
     //printf("Creation voie avant sem \n");
     //fflush(stdout);
-    v->semM=sem_open(sem_nom1, O_RDWR | O_CREAT, 0666, 1);
-    v->semGL=sem_open(sem_nom2, O_RDWR | O_CREAT, 0666, 1);
-    v->semTGV=sem_open(sem_nom3, O_RDWR | O_CREAT, 0666, 1);
+    //v->semM=sem_open(sem_nom1, O_RDWR | O_CREAT, 0666, 0);
+    v->semM = (sem_t * ) malloc(sizeof(sem_t));
+    sem_init(v->semM,0,0);
+    v->semGL = (sem_t * ) malloc(sizeof(sem_t));
+    sem_init(v->semGL,0,0);
+    v->semTGV = (sem_t * ) malloc(sizeof(sem_t));
+    sem_init(v->semTGV,0,0);
     return v;
 }
 
@@ -79,5 +83,3 @@ void deleteVoie(Voie *v){
     sem_unlink(sem_nom3);
     free(v);
 }
-
-
