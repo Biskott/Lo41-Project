@@ -131,7 +131,7 @@ void * fonc_Train(void *num)
 int main(int argc, char* argv[])
 {
 	//La SNCF est en greve
-	//greve();
+	greve();
 	srand(time(NULL));
 	// nombre de trains déf en paramètre ou via la constante
 	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
