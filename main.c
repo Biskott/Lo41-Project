@@ -1,3 +1,12 @@
+/**********************************************
+* Fichier principal							  *
+* Gestion du flux ferroviaire aux abords 	  *
+* d'une gare								  *
+* Projet LO41 - Printemps 2016                *
+* Auteurs :                                   *
+* Elise Kocik et Florian Bishop               *
+**********************************************/
+
 #include <time.h>
 #include <math.h>
 #include <stdio.h>

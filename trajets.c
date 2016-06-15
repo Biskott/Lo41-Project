@@ -30,7 +30,7 @@ void TGV_EO (Train *t)
 	voieD->occupee++;
 	voieD->reservee--;
 	aig2->occupee--;
-	printf("Le TGV %i s'arrete voie D.\n",t->id);
+	printf("Le TGV %i s’arrête voie D.\n",t->id);
 	sleep(2);
 	voieD->occupee--;
 	printf("Le TGV %i continue sa route vers %s \n",t->id, t->destination);
@@ -44,7 +44,7 @@ void TGV_OE (Train *t)
 	sem_wait(voieC->semTGV);
 	voieC->TGV--;
 	voieC->occupee++;
-	printf("Le TGV %i s'arrete voie C.\n",t->id);
+	printf("Le TGV %i s’arrête voie C.\n",t->id);
 	sleep(2);
 	aig2->TGV++;
 	sem_wait(aig2->semTGV);
@@ -69,7 +69,33 @@ void TGV_OE (Train *t)
 
 void GL_EO (Train *t)
 {
-	printf("GL_EO\n");
+	printf("\nLe train %i à destination de %s a été signalé venant de l'Est.\n", t->id,t->destination);
+	tunnel->GL++;
+	sem_wait(tunnel->semGL);
+	tunnel->occupee++;
+	tunnel->GL--;
+	printf("Le train %i emprunte le tunnel.\n",t->id );
+	sleep(1);
+	gGL->occupee++;
+	tunnel->occupee--;
+	printf("Le train %i est sur la voie de garage TGV.\n",t->id );
+	voieD->GL++;
+	sem_wait(voieD->semGL);
+	voieD->reservee++;
+	voieD->GL--;
+	aig2->GL++;
+	sem_wait(aig2->semGL);
+	aig2->occupee++;
+	aig2->GL--;
+	printf("Le train %i emprunte l'aiguillage 2.\n",t->id );
+	sleep(1);
+	voieD->occupee++;
+	voieD->reservee--;
+	aig2->occupee--;
+	printf("Le train %i s’arrête voie D.\n",t->id);
+	sleep(2);
+	voieD->occupee--;
+	printf("Le train %i continue sa route vers %s \n",t->id, t->destination);
 
 }
 
@@ -80,7 +106,7 @@ void GL_OE (Train *t)
 	sem_wait(voieC->semGL);
 	voieC->GL--;
 	voieC->occupee++;
-	printf("Le train %i s'arrete voie C.\n",t->id);
+	printf("Le train %i s’arrête voie C.\n",t->id);
 	sleep(2);
 	aig2->GL++;
 	sem_wait(aig2->semGL);

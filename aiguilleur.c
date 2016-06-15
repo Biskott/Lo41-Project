@@ -1,3 +1,11 @@
+/**********************************************
+* Fonctions des aiguilleurs qui décident 	  *
+* du passage des trains						  *
+* Projet LO41 - Printemps 2016                *
+* Auteurs :                                   *
+* Elise Kocik et Florian Bishop               *
+**********************************************/
+
 #include "aiguilleur.h"
 
 void * fonc_P0(void *num)
@@ -30,7 +38,7 @@ void * fonc_P0(void *num)
 			}
 		}
 		sleep(1);
-		//printf("Stop : %i\n", stop);
+		printf("Stop : %i\n", stop);
 	}
 	pthread_exit(NULL);
 }
