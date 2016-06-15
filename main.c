@@ -15,7 +15,8 @@
 
 #include "train.c"
 #include "voie.c"
-int stop;
+
+int *stop=0;
 Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
 #include "aiguilleur.c"
 
@@ -242,7 +243,7 @@ int main(int argc, char* argv[])
 	
 	
 	//printf("nbtrains : %i \n",NbTrains);
-	int NumTrain =0, stop=0;
+	int NumTrain =0;
 	pthread_t tid[NbTrains];
 	pthread_t aiguil[3];
 	//getchar();
@@ -306,7 +307,7 @@ int main(int argc, char* argv[])
    	stop=1;
    	printf("Join trains OK\n");
    	int j;
-   	for(j=0;j<3;k ++){
+   	for(j=0;j<3;j++){
    		pthread_join(aiguil[j],NULL);
    	}
    	printf("Join aiguil OK\n");

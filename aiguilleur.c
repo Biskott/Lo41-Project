@@ -30,8 +30,8 @@ void * fonc_P0(void *num)
 			}
 		}
 		sleep(1);
+		printf("Stop : %i\n", stop);
 	}
-	printf("STOP \n");
 	pthread_exit(NULL);
 }
 
