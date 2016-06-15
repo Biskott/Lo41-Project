@@ -26,7 +26,7 @@ char* tab_Dest[]={
 	"Dalaran",
 	"Palaiseau",
 	"Fond de l'étang",
-	"Bordeaux",
+	"Semestre Sup",
 	"Strasbourg",
 	"Cul-de-Sac"
 };
