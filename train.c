@@ -50,7 +50,7 @@ Train* createTrain(int id, Type type, Direction dir)
 				break;
 
 	}
-	printf("Le %s %i  %s a pour destination %s \n",typ,t->id,direc,t->destination);
+	//printf("Le %s %i  %s a pour destination %s \n",typ,t->id,direc,t->destination);
 	return t;
 }
 
