@@ -10,7 +10,7 @@
 
 void * fonc_P0(void *num)
 {
-	while (stop==0){
+	while (*stop==0){
 		if(aig2->occupee == 0 && aig2->reservee == 0){
 			if(aig2->TGV >0){
 				sem_post(aig2->semTGV);
@@ -38,14 +38,14 @@ void * fonc_P0(void *num)
 			}
 		}
 		sleep(1);
-		printf("Stop : %i\n", stop);
+		//printf("Stop : %i\n", stop);
 	}
 	pthread_exit(NULL);
 }
 
 void * fonc_P1(void *num)
 {
-	while(stop==0){
+	while(*stop==0){
 		if(aig1->occupee == 0 && aig1->reservee == 0 && aig1->M>0){
 			sem_post(aig1->semM);
 		}
@@ -61,7 +61,7 @@ void * fonc_P1(void *num)
 
 void * fonc_P2(void *num)
 {
-	while(stop==0){
+	while(*stop==0){
 		if(tunnel->occupee ==0 && tunnel->reservee == 0){
 			if(tunnel->TGV>0){
 				sem_post(tunnel->semTGV);

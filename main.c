@@ -25,7 +25,8 @@
 #include "train.c"
 #include "voie.c"
 
-int *stop=0;
+int *stop;
+
 Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
 #include "aiguilleur.c"
 #include "trajets.c"
@@ -112,6 +113,8 @@ int main(int argc, char* argv[])
 	// nombre de trains déf en paramètre ou via la constante
 	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
 	
+	stop=(int *)malloc(sizeof(int)) ; 
+	*stop=0;
 	
 	//printf("nbtrains : %i \n",NbTrains);
 	int NumTrain =0;
@@ -164,14 +167,14 @@ int main(int argc, char* argv[])
 	    usleep(100000);
     }
 
-
+    sleep((int)NbTrains*0.8);
     printf("\n Attention : Etat d'urgence - Fermeture de la gare imminente!\n\n");
     
     int i;
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
-   	stop=1;
+   	*stop=1;
    	//printf("Join trains OK\n");
    	int j;
    	for(j=0;j<3;j++){
@@ -182,5 +185,6 @@ int main(int argc, char* argv[])
    	//printf("Delete reseau OK\n");
    	printf("\n\n Fermeture de la gare pour cause d'état d'urgence!\n\n");
    	pthread_exit(NULL);
+   	free(stop);
    	return(0);
 }

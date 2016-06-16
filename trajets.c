@@ -78,7 +78,7 @@ void GL_EO (Train *t)
 	sleep(1);
 	gGL->occupee++;
 	tunnel->occupee--;
-	printf("Le train %i est sur la voie de garage TGV.\n",t->id );
+	printf("Le train %i est sur la voie de garage GL.\n",t->id );
 	voieD->GL++;
 	sem_wait(voieD->semGL);
 	voieD->reservee++;
@@ -117,7 +117,7 @@ void GL_OE (Train *t)
 	sleep(1);
 	aig2->occupee--;
 	gGL->occupee++;
-	printf("Le train %i est sur la voie de garage TGV.\n",t->id );
+	printf("Le train %i est sur la voie de garage GL.\n",t->id );
 	tunnel->GL++;
 	sem_wait(tunnel->semGL);
 	tunnel->occupee++;
