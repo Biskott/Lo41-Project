@@ -11,6 +11,7 @@
 void * fonc_P0(void *num)
 {
 	while (*stop==0){
+		pthread_mutex_lock (&voieGL);
 		if(aig2->occupee == 0 && aig2->reservee == 0){
 			if(aig2->TGV >0){
 				sem_post(aig2->semTGV);
@@ -37,7 +38,8 @@ void * fonc_P0(void *num)
 				sem_post(voieD->semGL);
 			}
 		}
-		sleep(1);
+		pthread_mutex_unlock (&voieGL);
+		//sleep(1);
 		//printf("Stop : %i\n", stop);
 	}
 	pthread_exit(NULL);
@@ -46,6 +48,7 @@ void * fonc_P0(void *num)
 void * fonc_P1(void *num)
 {
 	while(*stop==0){
+		pthread_mutex_lock (&marchandises);
 		if(aig1->occupee == 0 && aig1->reservee == 0 && aig1->M>0){
 			sem_post(aig1->semM);
 		}
@@ -55,6 +58,7 @@ void * fonc_P1(void *num)
 		if(voieB->occupee == 0 && voieB->reservee == 0 && voieB->M>0){
 			sem_post(voieB->semM);
 		}
+		pthread_mutex_unlock (&marchandises);
 	}
 	pthread_exit(NULL);
 }
@@ -62,6 +66,7 @@ void * fonc_P1(void *num)
 void * fonc_P2(void *num)
 {
 	while(*stop==0){
+		pthread_mutex_lock (&tunGar);
 		if(tunnel->occupee ==0 && tunnel->reservee == 0){
 			if(tunnel->TGV>0){
 				sem_post(tunnel->semTGV);
@@ -73,6 +78,7 @@ void * fonc_P2(void *num)
 				sem_post(tunnel->semM);
 			}
 		}
+		pthread_mutex_unlock (&tunGar);
 	}
 	pthread_exit(NULL);
 }

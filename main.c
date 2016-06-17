@@ -28,6 +28,10 @@
 int *stop;
 
 Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
+/* Création des mutex */
+pthread_mutex_t tunGar = PTHREAD_MUTEX_INITIALIZER; 
+pthread_mutex_t voieGL = PTHREAD_MUTEX_INITIALIZER; 
+pthread_mutex_t marchandises = PTHREAD_MUTEX_INITIALIZER; 
 #include "aiguilleur.c"
 #include "trajets.c"
 
