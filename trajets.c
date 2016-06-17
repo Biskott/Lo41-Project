@@ -12,7 +12,7 @@
 * Avant de modifier les éléments des voies (nombre de trains en attente, occupation, etc..),	  *
 * les trains verrouillent le mutex correspondant et le déverrouillent après les opérations.		  *
 **************************************************************************************************/
-
+#include "train.h"
 
 /**********************************************
 * Fonction pour le trajet des TGV est-ouest   *

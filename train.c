@@ -24,7 +24,7 @@ Train* createTrain(int id, Type type, Direction dir)
 	t->type=type;
 	t->direction=dir;
 	t->destination=tab_Dest[(rand()%10)];
-	char* typ;
+	/*char* typ;
 	switch(t->type){
 		case TGV:
 				typ="TGV";
@@ -49,7 +49,7 @@ Train* createTrain(int id, Type type, Direction dir)
 				direc="OE";
 				break;
 
-	}
+	}*/
 	//printf("Le %s %i  %s a pour destination %s \n",typ,t->id,direc,t->destination);
 	return t;
 }
