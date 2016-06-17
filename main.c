@@ -38,7 +38,9 @@ pthread_mutex_t marchandises = PTHREAD_MUTEX_INITIALIZER;
 #define NB_TRAINS 20
 
 
-
+/**********************************************
+* Fonction de greve au début du programme     *
+**********************************************/
 void greve()
 {
 	sleep(4);
@@ -51,11 +53,14 @@ void greve()
 	printf("\n");
 }
 
+/**********************************************
+* Initialisation des voies du réseau          *
+**********************************************/
 void initReseau()
 {
 	//printf("voieA");
 	//fflush(stdout);
-	voieA =createVoie("voieA",1);
+	voieA=createVoie("voieA",1);
 	voieB=createVoie("voieB",1);
 	voieC=createVoie("voieC",3);
 	voieD=createVoie("voieD",3);
@@ -67,6 +72,10 @@ void initReseau()
 	gGL=createVoie("gGL",2);
 	tunnel=createVoie("tunnel",3);
 }
+
+/**********************************************
+* Suppression des voies du réseau             *
+**********************************************/
 void deleteReseau()
 {
 	deleteVoie(voieA);
@@ -82,11 +91,16 @@ void deleteReseau()
 	deleteVoie(tunnel);
 }
 
+/************************************************************
+* Création des trains et appel des fonctions de trajet      *
+************************************************************/
 void * fonc_Train(void *num)
 {
 	//printf("num thread %i \n",(int)num);
     //printf("de TID : %ld \n", (long) pthread_self());
+    /* Création du train*/
 	Train * t=randomTrain((int)num);
+	/*Appel de la fonction de trajet correspondante*/
 	switch(t->type){
 		case TGV:
 					if (t->direction==EO){TGV_EO(t);}
@@ -104,24 +118,32 @@ void * fonc_Train(void *num)
 					printf("Default case");
 					break;
 	}
+	/*Suppression du train avant la fin du thread*/
 	deleteTrain(t);
+	/*Fin du thread*/
 	pthread_exit(NULL);
 }
 
+/**********************************************
+* Fonction principale du programme            *
+**********************************************/
 int main(int argc, char* argv[])
 {
-	//La SNCF est en greve
+	/*La SNCF est en greve*/
 	greve();
+	/*Initialisation du réseau*/
 	initReseau();
 	srand(time(NULL));
-	// nombre de trains déf en paramètre ou via la constante
+	/* nombre de trains déf en paramètre ou via la constante*/
 	int NbTrains = (argc > 1 ? atoi(argv[1]) : NB_TRAINS); 
-	
+	/*Entier permettant l'arret des threads d'aiguillage*/
 	stop=(int *)malloc(sizeof(int)) ; 
 	*stop=0;
 	
 	//printf("nbtrains : %i \n",NbTrains);
+	/*NumTrain : Numéro du prochain train créé*/
 	int NumTrain =0;
+	/*depTrain : Nombre de trains générés dès le lancement du programme*/
 	int depTrain=(int)NbTrains/5;
 	pthread_t tid[NbTrains];
 	pthread_t aiguil[3];
