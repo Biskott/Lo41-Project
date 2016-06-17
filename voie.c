@@ -17,12 +17,13 @@
 * Création d'une voie                         *
 **********************************************/
 
-Voie* createVoie(char* nom)
+Voie* createVoie(char* nom, int longueur)
 {
     Voie * v =malloc(sizeof(Voie));
     v->nom=nom;
     v->reservee=0;
     v->occupee=0;
+    v->longueur=longueur;
     v->TGV=0;
     v->GL=0;
     v->M=0;

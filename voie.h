@@ -28,6 +28,7 @@ typedef struct {
 	sem_t * semTGV;
 	int reservee;
     int occupee;
+    int longueur;
     char * nom;
     int TGV; //TGV en attente
     int GL; //GL en attente
@@ -39,7 +40,7 @@ typedef struct {
 **********************************************/
 
 /** Crée une nouvelle voie*/
-Voie* createVoie(char * nom);
+Voie* createVoie(char * nom, int longueur);
 
 /** Suppression de la voie*/
 void deleteVoie(Voie *v);

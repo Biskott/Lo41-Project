@@ -51,17 +51,17 @@ void initReseau()
 {
 	//printf("voieA");
 	//fflush(stdout);
-	voieA =createVoie("voieA");
-	voieB=createVoie("voieB");
-	voieC=createVoie("voieC");
-	voieD=createVoie("voieD");
-	aig1=createVoie("aig1");
-	aig2=createVoie("aig2");
-	gTGV=createVoie("gTGV");
-	gM1=createVoie("gM1");
-	gM2=createVoie("gM2");
-	gGL=createVoie("gGL");
-	tunnel=createVoie("tunnel");
+	voieA =createVoie("voieA",1);
+	voieB=createVoie("voieB",1);
+	voieC=createVoie("voieC",3);
+	voieD=createVoie("voieD",3);
+	aig1=createVoie("aig1",1);
+	aig2=createVoie("aig2",1);
+	gTGV=createVoie("gTGV",2);
+	gM1=createVoie("gM1",1);
+	gM2=createVoie("gM2",1);
+	gGL=createVoie("gGL",2);
+	tunnel=createVoie("tunnel",3);
 }
 void deleteReseau()
 {
