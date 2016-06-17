@@ -122,22 +122,20 @@ int main(int argc, char* argv[])
 	
 	//printf("nbtrains : %i \n",NbTrains);
 	int NumTrain =0;
-	int depTrain=5;
+	int depTrain=(int)NbTrains/5;
 	pthread_t tid[NbTrains];
 	pthread_t aiguil[3];
 	//getchar();
 	int rc,k;
 	//Génération de 2 premiers trains
-	if(NbTrains>=depTrain){
-		for (int tr=0; tr<depTrain;tr++){
-			if(rc=pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)!=0){
-		        	printf("Erreur dans la creation du thread %i",NumTrain);
-					return EXIT_FAILURE;
-		    }
-		    else{
-		    		NumTrain++;
-		    }
-		}
+	for (int tr=0; tr<depTrain;tr++){
+		if(rc=pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)!=0){
+	        	printf("Erreur dans la creation du thread %i",NumTrain);
+				return EXIT_FAILURE;
+	    }
+	    else{
+	    		NumTrain++;
+	    }
 	}
 	//Generation des aiguilleurs
 
@@ -168,11 +166,11 @@ int main(int argc, char* argv[])
 	    		NumTrain++;
 	    	}
 	    }
-	    usleep(100000);
+	    usleep(200000);
     }
 
-    sleep((int)NbTrains*0.8);
-    printf("\n Attention : Etat d'urgence - Fermeture de la gare imminente!\n\n");
+    sleep((int)NbTrains*0.9);
+    printf("\n Attention : Etat d'urgence - Fermeture de la gare imminente! - Evacuation des trains\n\n");
     
     int i;
    	for(i=0;i<NbTrains;i ++){
