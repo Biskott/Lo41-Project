@@ -5,6 +5,18 @@
 * Elise Kocik et Florian Bishop               *
 **********************************************/
 
+/**************************************************************************************************
+* Une fonction par type et sens de train. 														  *
+* Les trains attendent d'avoir l'acces et reservent les prochaines voies à emprunter.			  *
+* Le temps passé sur chaque voie est symbolisé par un sleep().									  *
+* Avant de modifier les éléments des voies (nombre de trains en attente, occupation, etc..),	  *
+* les trains verrouillent le mutex correspondant et le déverrouillent après les opérations.		  *
+**************************************************************************************************/
+
+
+/**********************************************
+* Fonction pour le trajet des TGV est-ouest   *
+**********************************************/
 void TGV_EO (Train *t)
 {
 	printf("\nLe TGV %i à destination de %s a été signalé venant de l'Est.\n", t->id,t->destination);
@@ -57,6 +69,9 @@ void TGV_EO (Train *t)
 	printf("Le TGV %i continue sa route vers %s \n",t->id, t->destination);
 }
 
+/**********************************************
+* Fonction pour le trajet des TGV ouest-est   *
+**********************************************/
 void TGV_OE (Train *t)
 {
 	printf("\nLe TGV %i à destination de %s a été signalé venant de l'Ouest.\n", t->id,t->destination);
@@ -106,6 +121,9 @@ void TGV_OE (Train *t)
 	printf("Le TGV %i continue sa route vers %s \n",t->id, t->destination);
 }
 
+/****************************************************************
+* Fonction pour le trajet des trains grandes lignes est-ouest   *
+****************************************************************/
 void GL_EO (Train *t)
 {
 	printf("\nLe train %i à destination de %s a été signalé venant de l'Est.\n", t->id,t->destination);
@@ -159,6 +177,9 @@ void GL_EO (Train *t)
 
 }
 
+/****************************************************************
+* Fonction pour le trajet des trains grandes lignes ouest-est   *
+****************************************************************/
 void GL_OE (Train *t)
 {
 	printf("\nLe train %i à destination de %s a été signalé venant de l'Ouest.\n", t->id,t->destination);
@@ -207,6 +228,9 @@ void GL_OE (Train *t)
 	printf("Le train %i continue sa route vers %s \n",t->id, t->destination);
 }
 
+/****************************************************************
+* Fonction pour le trajet des trains de marchandises est-ouest  *
+****************************************************************/
 void M_EO (Train *t)
 {
 	printf("\nLe train de marchandises %i à destination de %s a été signalé venant de l'Est.\n", t->id,t->destination);
@@ -259,6 +283,9 @@ void M_EO (Train *t)
 	printf("Le train de marchandises %i continue sa route vers %s \n",t->id, t->destination);
 }	
 
+/****************************************************************
+* Fonction pour le trajet des trains de marchandises ouest-est  *
+****************************************************************/
 void M_OE (Train *t)
 {
 	printf("\nLe train de marchandises %i à destination de %s a été signalé venant de l'Ouest.\n", t->id,t->destination);

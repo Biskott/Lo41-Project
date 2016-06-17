@@ -29,7 +29,9 @@
 int *stop;
 
 Voie *voieA, *voieB, *voieC, *voieD, *aig1, *aig2, *gTGV, *gM1, *gM2, *gGL,*tunnel;
-/* Création des mutex */
+/* Création des mutex : un pour le tunnel et les voies de garages*/ 
+/*un pour les voies C, D et l'aiguillage 2*/ 
+/*un pour les voies A, B et l'aiguillage1*/
 pthread_mutex_t tunGar = PTHREAD_MUTEX_INITIALIZER; 
 pthread_mutex_t voieGL = PTHREAD_MUTEX_INITIALIZER; 
 pthread_mutex_t marchandises = PTHREAD_MUTEX_INITIALIZER; 
