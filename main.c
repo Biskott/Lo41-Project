@@ -7,6 +7,7 @@
 * Elise Kocik et Florian Bishop               *
 **********************************************/
 
+/*Librairies nécessaires à l’exécution du programme*/
 #include <time.h>
 #include <math.h>
 #include <stdio.h>
@@ -145,11 +146,13 @@ int main(int argc, char* argv[])
 	int NumTrain =0;
 	/*depTrain : Nombre de trains générés dès le lancement du programme*/
 	int depTrain=(int)NbTrains/5;
+	/*Tableau des threads trains*/
 	pthread_t tid[NbTrains];
+	/*Tableau des threads aiguilleurs*/
 	pthread_t aiguil[3];
 	//getchar();
 	int rc,k;
-	//Génération de 2 premiers trains
+	/* Génération des trains dès le lancement du programme*/
 	for (int tr=0; tr<depTrain;tr++){
 		if(rc=pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)!=0){
 	        	printf("Erreur dans la creation du thread %i",NumTrain);
@@ -159,7 +162,7 @@ int main(int argc, char* argv[])
 	    		NumTrain++;
 	    }
 	}
-	//Generation des aiguilleurs
+	/*Generation des aiguilleurs*/
 
 	if(rc=pthread_create(&(aiguil[0]), NULL, fonc_P0, (void*)0)!=0){
 	    printf("Erreur dans la creation du thread %i",NumTrain);
@@ -175,10 +178,11 @@ int main(int argc, char* argv[])
 	}
 	
 
-	//Génération des trains à des intervalles de temps aléatoires
+	/*Génération du reste des trains à des intervalles de temps aléatoires*/
 	while(NumTrain<NbTrains){
+		/*Aléatoire pour espacer la création des trains*/
 		k=rand()%7;
-		//Création des threads trains
+		/*Création des threads trains*/
 		if(k<2){
 	        if(rc=pthread_create(&(tid[NumTrain]), NULL, fonc_Train, (void*)NumTrain)!=0){
 	        	printf("Erreur dans la creation du thread %i",NumTrain);
@@ -188,23 +192,26 @@ int main(int argc, char* argv[])
 	    		NumTrain++;
 	    	}
 	    }
+	    /*Petit temps d'attente*/
 	    usleep(200000);
     }
-
+    /*Temps d'attente après la création de la totalité des trains*/
     sleep((int)NbTrains*0.9);
     printf("\n Attention : Etat d'urgence - Fermeture de la gare imminente! - Evacuation des trains\n\n");
-    
+    /*On attend la fin des threads trains*/
     int i;
    	for(i=0;i<NbTrains;i ++){
    		pthread_join(tid[i],NULL);
    	}
    	*stop=1;
    	//printf("Join trains OK\n");
+   	/*On attend la fin des threads aiguilleurs*/
    	int j;
    	for(j=0;j<3;j++){
    		pthread_join(aiguil[j],NULL);
    	}
    	//printf("Join aiguil OK\n");
+   	/*On supprime le réseau*/
    	deleteReseau();
    	//printf("Delete reseau OK\n");
    	printf("\n\n Fermeture de la gare pour cause d'état d'urgence!\n\n");
