@@ -21,7 +21,7 @@ void * fonc_P0(void *num)
 			}
 		}
 
-		if(voieC->occupee <2 && voieC->reservee == 0){
+		if((voieC->occupee+voieC->reservee)<2){
 			if(voieC->TGV >0){
 				sem_post(voieC->semTGV);
 			}
@@ -30,7 +30,7 @@ void * fonc_P0(void *num)
 			}
 		}
 
-		if(voieD->occupee <2 && voieD->reservee < 2){
+		if((voieD->occupee+voieD->reservee )< 2){
 			if(voieD->TGV >0){
 				sem_post(voieD->semTGV);
 			}
