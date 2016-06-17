@@ -6,7 +6,11 @@
 * Elise Kocik et Florian Bishop               *
 **********************************************/
 
-#include "aiguilleur.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#include <string.h>
 
 void * fonc_P0(void *num)
 {
